@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Exploración Espacial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-rocket"></i> Exploración Espacial
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/planetas}">
+                            <i class="fas fa-globe"></i> Planetas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/tripulacion}">
+                            <i class="fas fa-users"></i> Tripulación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/expediciones}">
+                            <i class="fas fa-space-shuttle"></i> Expediciones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="display-4 text-center mb-5">
+                    <i class="fas fa-rocket text-primary"></i> 
+                    Sistema de Exploración Espacial
+                </h1>
+                <p class="lead text-center mb-5">Gestión de misiones a planetas no catalogados</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-globe fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Planetas</h5>
+                        <p class="card-text">Gestiona el catálogo de planetas no explorados</p>
+                        <a th:href="@{/planetas}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> Ver Planetas
+                        </a>
+                        <a th:href="@{/planetas/nuevo}" class="btn btn-outline-primary ms-2">
+                            <i class="fas fa-plus"></i> Nuevo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Tripulación</h5>
+                        <p class="card-text">Administra los miembros de tripulación disponibles</p>
+                        <a th:href="@{/tripulacion}" class="btn btn-success">
+                            <i class="fas fa-eye"></i> Ver Tripulación
+                        </a>
+                        <a th:href="@{/tripulacion/nuevo}" class="btn btn-outline-success ms-2">
+                            <i class="fas fa-plus"></i> Nuevo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-space-shuttle fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">Expediciones</h5>
+                        <p class="card-text">Planifica y gestiona misiones de exploración</p>
+                        <a th:href="@{/expediciones}" class="btn btn-warning">
+                            <i class="fas fa-eye"></i> Ver Expediciones
+                        </a>
+                        <a th:href="@{/expediciones/nuevo}" class="btn btn-outline-warning ms-2">
+                            <i class="fas fa-plus"></i> Nueva
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-info-circle"></i> Información del Sistema
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Requisitos para Expediciones:</strong></p>
+                                <ul>
+                                    <li>Mínimo 1 Piloto en la tripulación</li>
+                                    <li>Mínimo 1 Científico en la tripulación</li>
+                                    <li>Planeta destino asignado</li>
+                                    <li>Fecha de lanzamiento programada</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Especialidades Disponibles:</strong></p>
+                                <ul>
+                                    <li><span class="badge bg-primary">Piloto</span> - Navegación y control</li>
+                                    <li><span class="badge bg-success">Científico</span> - Investigación</li>
+                                    <li><span class="badge bg-info">Ingeniero</span> - Mantenimiento</li>
+                                    <li><span class="badge bg-warning">Médico</span> - Atención sanitaria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

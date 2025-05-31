@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${miembro.id != null ? 'Editar Miembro' : 'Nuevo Miembro'}">Formulario Tripulación</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-rocket"></i> Exploración Espacial
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/planetas}">
+                            <i class="fas fa-globe"></i> Planetas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/tripulacion}">
+                            <i class="fas fa-users"></i> Tripulación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/expediciones}">
+                            <i class="fas fa-space-shuttle"></i> Expediciones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0">
+                            <i class="fas fa-users text-success"></i>
+                            <span th:text="${miembro.id != null ? 'Editar Miembro' : 'Nuevo Miembro'}">Formulario Tripulación</span>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/tripulacion/guardar}" th:object="${miembro}" method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre" class="form-label">
+                                        <i class="fas fa-user"></i> Nombre Completo *
+                                    </label>
+                                    <input type="text" class="form-control" th:field="*{nombre}" 
+                                           id="nombre" placeholder="Ej: Ana García López" required>
+                                    <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
+                                        <small th:errors="*{nombre}">Error en nombre</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="especialidad" class="form-label">
+                                        <i class="fas fa-star"></i> Especialidad *
+                                    </label>
+                                    <select class="form-select" th:field="*{especialidad}" id="especialidad" required>
+                                        <option value="">Seleccione una especialidad</option>
+                                        <option th:each="esp : ${especialidades}" 
+                                                th:value="${esp}" 
+                                                th:text="${esp}">Especialidad</option>
+                                    </select>
+                                    <div th:if="${#fields.hasErrors('especialidad')}" class="text-danger">
+                                        <small th:errors="*{especialidad}">Error en especialidad</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edad" class="form-label">
+                                        <i class="fas fa-calendar-alt"></i> Edad *
+                                    </label>
+                                    <input type="number" min="18" max="65" class="form-control" th:field="*{edad}" 
+                                           id="edad" placeholder="Ej: 35" required>
+                                    <div th:if="${#fields.hasErrors('edad')}" class="text-danger">
+                                        <small th:errors="*{edad}">Error en edad</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="anosExperiencia" class="form-label">
+                                        <i class="fas fa-graduation-cap"></i> Años de Experiencia *
+                                    </label>
+                                    <input type="number" min="0" max="50" class="form-control" th:field="*{anosExperiencia}" 
+                                           id="anosExperiencia" placeholder="Ej: 10" required>
+                                    <div th:if="${#fields.hasErrors('anosExperiencia')}" class="text-danger">
+                                        <small th:errors="*{anosExperiencia}">Error en experiencia</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-check-circle"></i> Estado de Disponibilidad
+                                    </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" th:field="*{disponible}" 
+                                               id="disponible" checked>
+                                        <label class="form-check-label" for="disponible">
+                                            Disponible para misiones
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-info-circle"></i> Información sobre Especialidades:</h6>
+                                <ul class="mb-0">
+                                    <li><strong>Piloto:</strong> Responsable de la navegación y control de la nave</li>
+                                    <li><strong>Científico:</strong> Encargado de la investigación y análisis</li>
+                                    <li><strong>Ingeniero:</strong> Mantenimiento y reparación de sistemas</li>
+                                    <li><strong>Médico:</strong> Atención médica y bienestar de la tripulación</li>
+                                </ul>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/tripulacion}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i> 
+                                    <span th:text="${miembro.id != null ? 'Actualizar' : 'Guardar'}">Guardar</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
