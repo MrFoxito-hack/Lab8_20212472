@@ -20,19 +20,19 @@ public class Planeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message = "El nombre es obligatorio")
+    @NotBlank(message = "El nombre debe ser obligatorio")
     @Column(nullable = false, unique = true)
     private String nombre;
     
-    @NotBlank(message = "El tipo de planeta es obligatorio")
+    @NotBlank(message = "El tipo de planeta debe serr obligatorio")
     @Column(nullable = false)
     private String tipoPlaneta;
     
-    @NotNull(message = "La habitabilidad es obligatoria")
+    @NotNull(message = "La habitabilidad de be ser obligtoria")
     @Column(nullable = false)
     private Boolean habitable;
     
-    @NotNull(message = "La gravedad relativa es obligatoria")
+    @NotNull(message = "La gravedad  es obligatoria")
     @Column(nullable = false)
     private Double gravedadRelativa;
     

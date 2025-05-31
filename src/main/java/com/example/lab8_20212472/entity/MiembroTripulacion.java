@@ -23,22 +23,22 @@ public class MiembroTripulacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message = "El nombre es obligatorio")
+    @NotBlank(message = "El nombre debe ser obligatorio")
     @Column(nullable = false)
     private String nombre;
     
-    @NotBlank(message = "La especialidad es obligatoria")
+    @NotBlank(message = "La especialidad dbe ser obligatoria")
     @Column(nullable = false)
     private String especialidad;
     
-    @NotNull(message = "La edad es obligatoria")
-    @Min(value = 18, message = "La edad mínima es 18 años")
-    @Max(value = 65, message = "La edad máxima es 65 años")
+    @NotNull(message = "La edad debe ser obligatoria")
+    @Min(value = 18, message = " edad mínima  18 años")
+    @Max(value = 65, message = " edad maaxima  65 años")
     @Column(nullable = false)
     private Integer edad;
     
-    @NotNull(message = "Los años de experiencia son obligatorios")
-    @Min(value = 0, message = "Los años de experiencia no pueden ser negativos")
+    @NotNull(message = "Debe tener años de experiencia")
+    @Min(value = 0, message = "invalidoo")
     @Column(nullable = false)
     private Integer anosExperiencia;
     

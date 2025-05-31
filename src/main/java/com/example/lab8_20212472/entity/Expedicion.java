@@ -25,13 +25,13 @@ public class Expedicion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message = "El nombre de la misión es obligatorio")
+    @NotBlank(message = "El nombre de la mision dber ser obligatorio")
 
 
 
     @Column(nullable = false)
     private String nombreMision;
-    @NotNull(message = "El planeta destino es obligatorio")
+    @NotNull(message = "El planeta destino debe ser obligatorio")
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class Expedicion {
 
     @Column(nullable = false)
     private LocalDateTime fechaLanzamiento;
-    @NotBlank(message = "El estado es obligatorio")
+    @NotBlank(message = "El estado es obligatoria")
 
     @Column(nullable = false)
     private String estado;
