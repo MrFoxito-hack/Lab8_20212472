@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Detalles de ' + ${expedicion.nombreMision}">Detalles de la Expedición</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-rocket"></i> Exploración Espacial
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/planetas}">
+                            <i class="fas fa-globe"></i> Planetas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/tripulacion}">
+                            <i class="fas fa-users"></i> Tripulación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/expediciones}">
+                            <i class="fas fa-space-shuttle"></i> Expediciones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <i class="fas fa-space-shuttle text-warning"></i>
+                            <span th:text="${expedicion.nombreMision}">Nombre de la Misión</span>
+                        </h3>
+                        <div>
+                            <a th:href="@{/expediciones/editar/{id}(id=${expedicion.id})}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a th:href="@{/expediciones}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Volver
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-info-circle"></i> Información de la Misión</h5>
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td class="fw-bold"><i class="fas fa-hashtag"></i> ID:</td>
+                                        <td th:text="${expedicion.id}">1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold"><i class="fas fa-tag"></i> Misión:</td>
+                                        <td th:text="${expedicion.nombreMision}">Misión Alpha</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold"><i class="fas fa-calendar-alt"></i> Lanzamiento:</td>
+                                        <td th:text="${#temporals.format(expedicion.fechaLanzamiento, 'dd/MM/yyyy HH:mm')}">01/06/2025 10:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold"><i class="fas fa-flag"></i> Estado:</td>
+                                        <td>
+                                            <span th:switch="${expedicion.estado}" class="badge fs-6">
+                                                <span th:case="'Planificada'" class="badge bg-info">
+                                                    <i class="fas fa-calendar-alt"></i> Planificada
+                                                </span>
+                                                <span th:case="'En Curso'" class="badge bg-warning">
+                                                    <i class="fas fa-rocket"></i> En Curso
+                                                </span>
+                                                <span th:case="'Completada'" class="badge bg-success">
+                                                    <i class="fas fa-check"></i> Completada
+                                                </span>
+                                                <span th:case="'Cancelada'" class="badge bg-danger">
+                                                    <i class="fas fa-times"></i> Cancelada
+                                                </span>
+                                                <span th:case="*" class="badge bg-secondary" th:text="${expedicion.estado}">Otro</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-globe"></i> Planeta Destino</h5>
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title" th:text="${expedicion.planetaDestino.nombre}">Kepler-442b</h6>
+                                        <p class="card-text">
+                                            <span class="badge bg-info" th:text="${expedicion.planetaDestino.tipo}">Rocoso</span>
+                                            <span th:if="${expedicion.planetaDestino.tieneAgua}" class="badge bg-success ms-2">
+                                                <i class="fas fa-tint"></i> Tiene Agua
+                                            </span>
+                                        </p>
+                                        <small class="text-muted">
+                                            <strong>Distancia:</strong> 
+                                            <span th:text="${#numbers.formatDecimal(expedicion.planetaDestino.distanciaDesdeEarth, 0, 'COMMA', 2, 'POINT')}">1,400</span> años luz
+                                        </small>
+                                        <br>
+                                        <a th:href="@{/planetas/detalle/{id}(id=${expedicion.planetaDestino.id})}" 
+                                           class="btn btn-sm btn-outline-info mt-2">
+                                            <i class="fas fa-eye"></i> Ver Detalles
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5><i class="fas fa-users"></i> Tripulación Asignada</h5>
+                            <div th:if="${#lists.isEmpty(expedicion.tripulacion)}" class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                No hay tripulación asignada a esta expedición.
+                            </div>
+                            
+                            <div th:if="${!#lists.isEmpty(expedicion.tripulacion)}" class="row">
+                                <div th:each="miembro : ${expedicion.tripulacion}" class="col-md-6 col-lg-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="card-title" th:text="${miembro.nombre}">Nombre del Miembro</h6>
+                                            <p class="card-text">
+                                                <span th:switch="${miembro.especialidad}" class="badge mb-2">
+                                                    <span th:case="'Piloto'" class="badge bg-primary">
+                                                        <i class="fas fa-rocket"></i> Piloto
+                                                    </span>
+                                                    <span th:case="'Científico'" class="badge bg-success">
+                                                        <i class="fas fa-flask"></i> Científico
+                                                    </span>
+                                                    <span th:case="'Ingeniero'" class="badge bg-info">
+                                                        <i class="fas fa-cog"></i> Ingeniero
+                                                    </span>
+                                                    <span th:case="'Médico'" class="badge bg-warning">
+                                                        <i class="fas fa-user-md"></i> Médico
+                                                    </span>
+                                                    <span th:case="*" class="badge bg-secondary" th:text="${miembro.especialidad}">Otra</span>
+                                                </span>
+                                                <br>
+                                                <small class="text-muted">
+                                                    <strong>Edad:</strong> <span th:text="${miembro.edad}">35</span> años<br>
+                                                    <strong>Experiencia:</strong> <span th:text="${miembro.anosExperiencia}">10</span> años
+                                                </small>
+                                            </p>
+                                            <a th:href="@{/tripulacion/detalle/{id}(id=${miembro.id})}" 
+                                               class="btn btn-sm btn-outline-success">
+                                                <i class="fas fa-user"></i> Ver Perfil
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5><i class="fas fa-check-circle"></i> Validación de Expedición</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Requisitos de Tripulación</h6>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span th:if="${expedicion.tripulacion.stream().anyMatch(m -> m.especialidad == 'Piloto')}" 
+                                                      class="badge bg-success me-2">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                                <span th:unless="${expedicion.tripulacion.stream().anyMatch(m -> m.especialidad == 'Piloto')}" 
+                                                      class="badge bg-danger me-2">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                                Piloto asignado
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span th:if="${expedicion.tripulacion.stream().anyMatch(m -> m.especialidad == 'Científico')}" 
+                                                      class="badge bg-success me-2">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                                <span th:unless="${expedicion.tripulacion.stream().anyMatch(m -> m.especialidad == 'Científico')}" 
+                                                      class="badge bg-danger me-2">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                                Científico asignado
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Estadísticas</h6>
+                                            <p class="card-text">
+                                                <strong>Total de tripulación:</strong> <span th:text="${expedicion.tripulacion.size()}">3</span> miembros<br>
+                                                <strong>Experiencia promedio:</strong> 
+                                                <span th:text="${expedicion.tripulacion.isEmpty() ? 0 : expedicion.tripulacion.stream().mapToInt(m -> m.anosExperiencia).average().orElse(0)}">8.5</span> años<br>
+                                                <strong>Edad promedio:</strong> 
+                                                <span th:text="${expedicion.tripulacion.isEmpty() ? 0 : expedicion.tripulacion.stream().mapToInt(m -> m.edad).average().orElse(0)}">32.5</span> años
+                                            </p>
+                                        </div>
+                                    </div>                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4" th:if="${expedicion.objetivos != null and !#strings.isEmpty(expedicion.objetivos)}">
+                            <h5><i class="fas fa-bullseye"></i> Objetivos de la Misión</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${expedicion.objetivos}">Objetivos de la misión</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4" th:if="${expedicion.resultados != null and !#strings.isEmpty(expedicion.resultados)}">
+                            <h5><i class="fas fa-chart-line"></i> Resultados de la Misión</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${expedicion.resultados}">Resultados de la misión</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

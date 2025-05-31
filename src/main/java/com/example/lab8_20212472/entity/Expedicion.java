@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-
 //usamos loombock
 
 @Entity
@@ -27,21 +26,26 @@ public class Expedicion {
     private Long id;
     
     @NotBlank(message = "El nombre de la misión es obligatorio")
+
+
+
     @Column(nullable = false)
     private String nombreMision;
-    
     @NotNull(message = "El planeta destino es obligatorio")
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "planet_id", nullable = false)
     private Planeta planetaDestino;
       @NotNull(message = "La fecha de lanzamiento es obligatoria")
+
     @Column(nullable = false)
     private LocalDateTime fechaLanzamiento;
-    
     @NotBlank(message = "El estado es obligatorio")
+
     @Column(nullable = false)
     private String estado;
-    
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "expedition_crew",
@@ -49,7 +53,7 @@ public class Expedicion {
         inverseJoinColumns = @JoinColumn(name = "crew_member_id")
     )
     private Set<MiembroTripulacion> tripulacion = new HashSet<>();
-    
+
     @Lob
     @Column(columnDefinition = "TEXT")
     private String objetivos;
@@ -57,7 +61,9 @@ public class Expedicion {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String resultados;
-    
+
+
+
     public Expedicion(String nombreMision, Planeta planetaDestino, LocalDateTime fechaLanzamiento, 
                      String estado, String objetivos) {        this.nombreMision = nombreMision;
         this.planetaDestino = planetaDestino;
@@ -65,15 +71,13 @@ public class Expedicion {
         this.estado = estado;
         this.objetivos = objetivos;
     }
-    
-    public void addCrewMember(MiembroTripulacion crewMember) {
-        tripulacion.add(crewMember);
-        crewMember.getExpediciones().add(this);
+      public void agregarMiembroTripulacion(MiembroTripulacion miembroTripulacion) {
+        tripulacion.add(miembroTripulacion);
+        miembroTripulacion.getExpediciones().add(this);
     }
     
-    public void removeCrewMember(MiembroTripulacion crewMember) {
-        tripulacion.remove(crewMember);
-        crewMember.getExpediciones().remove(this);
+    public void removerMiembroTripulacion(MiembroTripulacion miembroTripulacion) {
+        tripulacion.remove(miembroTripulacion);
+        miembroTripulacion.getExpediciones().remove(this);
     }
 }
-
